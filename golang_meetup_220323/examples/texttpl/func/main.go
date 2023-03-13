@@ -7,7 +7,7 @@ import (
 )
 
 type Inventory struct {
-	Item []Item
+	Items []Item
 }
 
 type Item struct {
@@ -17,7 +17,7 @@ type Item struct {
 
 func main() {
 	inventory := Inventory{
-		Item: []Item{
+		Items: []Item{
 			{"black tea", 17},
 			{"green tea", 10},
 			{"cookie", 5},
@@ -26,7 +26,7 @@ func main() {
 	}
 
 	text := `
-		{{- range $item := .Item }}
+		{{- range $item := .Items }}
 			{{ if ne $item.Count 0 -}}
 			Remaining {{ $item.Count }}{{ Quantifier $item.Name }} {{ $item.Name -}}
 			{{ end -}}
@@ -36,7 +36,7 @@ func main() {
 	tmpl, err := template.New("test").Funcs(
 		template.FuncMap{
 			"Quantifier": func(s string) string {
-				if strings.Contains(s, "tea") {
+				if strings.Contains(s, "tea") || strings.Contains(s, "coffee") {
 					return " bottles of"
 				}
 				if strings.Contains(s, "cookie") {

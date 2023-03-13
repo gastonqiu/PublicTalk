@@ -6,7 +6,7 @@ import (
 
 func main() {
 	inventory := generator.Inventory{
-		Item: []generator.Item{
+		Items: []generator.Item{
 			{Name: "black tea", Count: 17},
 			{Name: "green tea", Count: 10},
 			{Name: "cookie", Count: 5},

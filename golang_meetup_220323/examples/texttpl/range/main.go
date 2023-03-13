@@ -6,7 +6,7 @@ import (
 )
 
 type Inventory struct {
-	Item []Item
+	Items []Item
 }
 
 type Item struct {
@@ -16,7 +16,7 @@ type Item struct {
 
 func main() {
 	inventory := Inventory{
-		Item: []Item{
+		Items: []Item{
 			{"black tea", 17},
 			{"green tea", 10},
 			{"cookie", 5},
@@ -25,7 +25,7 @@ func main() {
 	}
 
 	text := `
-		{{- range $item := .Item }}
+		{{- range $item := .Items }}
 			Remaining {{ $item.Count }} {{ $item.Name -}}
 		{{ end -}}
 	`
