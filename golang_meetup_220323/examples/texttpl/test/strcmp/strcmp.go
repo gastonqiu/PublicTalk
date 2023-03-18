@@ -63,25 +63,25 @@ func BuildDiff(dpTable [][]int, x []string, y []string, pretty bool) string {
 	j := len(y)
 
 	for i > 0 && j > 0 {
-		if x[i-1] == y[j-1] {
-			i -= 1
-			j -= 1
-		} else if dpTable[i-1][j] >= dpTable[i][j-1] {
+		if dpTable[i][j] == dpTable[i-1][j] {
 			diffReverse = append(diffReverse, Diff{
 				Text: x[i-1],
 				Line: i,
 				Type: Addition,
 			})
 
-			i -= 1
-		} else if dpTable[i-1][j] < dpTable[i][j-1] {
+			i--
+		} else if dpTable[i][j] == dpTable[i][j-1] {
 			diffReverse = append(diffReverse, Diff{
 				Text: y[j-1],
 				Line: j,
 				Type: Subtraction,
 			})
 
-			j -= 1
+			j--
+		} else {
+			i--
+			j--
 		}
 	}
 
