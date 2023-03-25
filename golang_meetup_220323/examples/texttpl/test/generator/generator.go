@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"html/template"
 	"os"
+	"strings"
 )
 
 type Inventory struct {
-	Item []Item
+	Items []Item
 }
 
 type Item struct {
@@ -16,12 +17,25 @@ type Item struct {
 }
 
 func Generate(inventory *Inventory) (string, error) {
-	b, err := os.ReadFile("./text.tpl")
+	b, err := os.ReadFile("../_templates/text.tpl")
 	if err != nil {
 		return "", err
 	}
 
-	tmpl, err := template.New("test").Parse(string(b))
+	tmpl, err := template.New("test").Funcs(
+		template.FuncMap{
+			"Quantifier": func(s string) string {
+				if strings.Contains(s, "tea") || strings.Contains(s, "coffee") {
+					return " bottles of"
+				}
+				if strings.Contains(s, "cookie") {
+					return " bags of"
+				}
+
+				return ""
+			},
+		},
+	).Parse(string(b))
 	if err != nil {
 		return "", err
 	}
